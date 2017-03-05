@@ -4,7 +4,7 @@ var Todo = require(`${process.cwd()}/models/Todos.js`);
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-	Todo.find()
+	Todo.find().exec()
 		.then(function(todos) {
 			todos = todos || [];
 
@@ -26,7 +26,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res) {
-	var title = req.param('title', false);
+	var title = req.body.title || false;
 
 	if (!title) {
 			return res.status(500).json({error: true});
