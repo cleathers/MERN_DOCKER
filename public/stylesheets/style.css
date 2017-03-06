@@ -6,3 +6,12 @@ body {
 a {
   color: #00B7FF;
 }
+
+.completed {
+	color: green;
+	text-decoration: line-through;
+}
+
+.margin-right {
+	margin-right: 1em;
+}
