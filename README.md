@@ -6,7 +6,7 @@
 1. Build image with the command line utilities needed to create a project
 	- `$ docker build -t node-express-webpack .`
 	- See [Dockerfile](https://github.com/cleathers/MERN_DOCKER/blob/master/Dockerfile)
-		- note the WORKDIR command, as that's where we'll be mounting our data volumes. You're welcome to change this value, but make sure that this value matches the second half of the `-v` option you'll see below.
+		- note the `WORKDIR` command, as that's where we'll be mounting our data volumes. You're welcome to change this value, but make sure that this value matches the second half of the `-v` option you'll see below.
 	- [Alpine Linux Node Base Image](https://hub.docker.com/r/mhart/alpine-node-auto/)
 
 ### Create Express Skeleton
@@ -30,3 +30,16 @@
 	- This is mostly the same command as ealier, but now we're using the `--link mongod:mongod` option to connect our containers together. The Express container is able to access the Mongo container at the host name defined in the link option. For this particular application I'm passing the hostname into the application using an environment variable with the `-e` option.
 
 ### React and Webpack
+1. In order to use React's fancy JSX syntax, you'll need to use some sort of compiler so that the browser can read what we wrote. We'll use webpack for that. The image we built earlier already has this dependency, but there are a couple of other dependencies we'll need to install in order to compile jsx files specifically.
+	- `$ docker run -it -v $(pwd):/var/www node-express-webpack npm install --save babel-core babel-loader babel-preset-latest babel-preset-react react react-dom`
+	- The Babel dependencies get us the compiler code, the react packages get us code that we'll use for the Frontend.
+1. We'll need to create a `webpack.config.js` file in order for webpack to know what to do with our code. This file just exports a webpack configuration object. The key properties to note are:
+		- `entry`: Webpack will automatically bundle all dependencies required to run the file(s) in this properties.
+		- `output`: This is where Webpack will place the bundled file. [Reference for multiple output files](http://codyreichert.github.io/blog/2015/07/04/webpack-create-multiple-bundles-with-entry-points/)
+		- `module.loaders`:
+			- `test`: a regexp for what filetypes to include
+			- `loader`: which loader strategy to use
+			- `query.presets`: An array of Babel presets to use
+1. Run the Webpack bundler like so:
+	- `$ docker run -it -v $(pwd):/var/www express-node-webpack webpack`
+	- Provided you didn't run into any errors, you should now see a bundled file in the location of the output property in the `webpack.config.js`.
