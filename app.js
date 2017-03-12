@@ -13,7 +13,7 @@ var todos = require('./routes/todos');
 var app = express();
 
 // Initialize Database
-var db = `mongodb://${process.env.MONGOD_URL}/todos`;
+var db = `mongodb://${process.env.MONGOD_HOST}/todos`;
 mongoose.connect(db, function(error) {
 	if (error) {
 		console.log(error);
