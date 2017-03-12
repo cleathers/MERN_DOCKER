@@ -30,7 +30,7 @@
 	- This is mostly the same command as ealier, but now we're using the `--link mongod:mongod` option to connect our containers together. The Express container is able to access the Mongo container at the host name defined in the link option. For this particular application I'm passing the hostname into the application using an environment variable with the `-e` option.
 
 ### React and Webpack
-##### Webpack
+#### Webpack
 1. In order to use React's fancy JSX syntax, you'll need to use some sort of compiler so that the browser can read what we wrote. We'll use webpack for that. The image we built earlier already has this dependency, but there are a couple of other dependencies we'll need to install in order to compile jsx files specifically.
 	- `$ docker run -it -v $(pwd):/var/www node-express-webpack npm install --save babel-core babel-loader babel-preset-latest babel-preset-react react react-dom`
 	- The Babel dependencies get us the compiler code, the react packages get us code that we'll use for the Frontend.
@@ -44,7 +44,8 @@
 1. Run the Webpack bundler like so:
 	- `$ docker run -it -v $(pwd):/var/www express-node-webpack webpack`
 	- Provided you didn't run into any errors, you should now see a bundled file in the location of the output property in the `webpack.config.js`.
-##### React
+
+#### React
 1. The entrypoint to this react app can be found at `./src/js/app.jsx`.
 	- The line that invokes `ReactDOM.render` is responsible for attaching your React code to the page. The first argument is a reference to the Component you'd like to load to the page. The second argument is a reference to the DOM node you'd like to attach the React app to.
 1. Application Structure:
