@@ -57,7 +57,7 @@ router.put('/:id', function(req, res) {
 	}
 
 	Todo.findOneAndUpdate({_id: id}, {completed: completed}).exec()
-		.then(function(a1, a2) {
+		.then(function() {
 			res.json({completed: completed});
 		})
 		.catch(function(err) {
@@ -74,7 +74,7 @@ router.delete('/:id', function(req, res) {
 	}
 
 	Todo.remove({ _id: id }).exec()
-		.then(function(a1, a2) {
+		.then(function() {
 			res.json({deleted: true});
 		})
 		.catch(function(err) {
