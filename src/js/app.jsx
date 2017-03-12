@@ -3,7 +3,9 @@ import ReactDOM from 'react-dom'
 import TodoList from './containers/TodoList.jsx'
 
 ReactDOM.render(
-	<TodoList />,
+	(<div className='container'>
+		<TodoList />
+	</div>),
 	document.getElementById('app')
 );
 

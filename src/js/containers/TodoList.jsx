@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import ListItem from '../components/ListItem.jsx'
-import { ListGroup } from 'react-bootstrap'
+import { Row, Col, ControlLabel, Form, Button, InputGroup, FormControl, FormGroup, ListGroup } from 'react-bootstrap'
 
 export default class TodoList extends React.Component {
 	constructor(props) {
@@ -11,13 +11,21 @@ export default class TodoList extends React.Component {
 		this.deleteTodo = this.deleteTodo.bind(this);
 		this.fetchTodos = this.fetchTodos.bind(this);
 		this.updateTodo = this.updateTodo.bind(this);
+		this.controlNewTodo = this.controlNewTodo.bind(this);
 
 		this.state = {
-			todos: []
+			todos: [],
+			newTodoValue: ''
 		};
 
 		// Go get our todos
 		this.fetchTodos();
+	}
+
+	controlNewTodo(event) {
+		this.setState({
+			newTodoValue: event.target.value
+		});
 	}
 
 	fetchTodos() {
@@ -45,13 +53,13 @@ export default class TodoList extends React.Component {
 			});
 	}
 
-	updateTodo(todoId) {
-		axios.put(`/todos/${todoId}`, {completed: true})
+	updateTodo(todoId, completed) {
+		axios.put(`/todos/${todoId}`, {completed})
 			.then((response) => {
 				var todos = this.state.todos;
 				todos = todos.map((todo) => {
 					if (todo.id === todoId) {
-						todo.completed = true;
+						todo.completed = completed;
 					}
 
 					return todo;
@@ -67,7 +75,7 @@ export default class TodoList extends React.Component {
 	addTodo(event) {
 		event.preventDefault();
 
-		var title = this.refs.newTodo.value;
+		var title = this.state.newTodoValue;
 		var todo = { title };
 
 		axios.post('/todos', todo)
@@ -78,9 +86,9 @@ export default class TodoList extends React.Component {
 
 				todos.push(todo);
 
-				this.refs.newTodo.value = '';
 				this.setState({
-					todos
+					todos,
+					newTodoValue: ''
 				});
 			});
 	}
@@ -98,15 +106,30 @@ export default class TodoList extends React.Component {
 	}
 
 	render() {
-		return <div id='todo-list'>
-			<ListGroup>
-				{this.buildTodos()}
-			</ListGroup>
-
-			<form onSubmit={this.addTodo}>
-				<input type="text" ref="newTodo" />
-				<button  type="submit">Submit</button>
-			</form>
-		</div>;
+		return <div>
+			<Row id='todo-list'>
+				<Col xs={3}>
+					<Form onSubmit={this.addTodo}>
+						<FormGroup>
+							<InputGroup>
+								<InputGroup.Button>
+									<Button type="submit" bsStyle="primary">Submit</Button>
+								</InputGroup.Button>
+								<FormControl ref="newTodo"
+									type="text"
+									onChange={this.controlNewTodo}
+									value={this.state.newTodoValue}
+									placeholder="New Todo" />
+							</InputGroup>
+						</FormGroup>
+					</Form>
+				</Col>
+				<Col xs={6}>
+					<ListGroup>
+						{this.buildTodos()}
+					</ListGroup>
+				</Col>
+			</Row>
+		</div>
 	}
 }

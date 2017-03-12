@@ -7,11 +7,19 @@ a {
   color: #00B7FF;
 }
 
-.completed {
-	color: green;
-	text-decoration: line-through;
+.list-item:nth-child(2n) {
+	background-color: #eee;
 }
 
-.margin-right {
-	margin-right: 1em;
+.list-item:hover {
+	background-color: #ccc;
+}
+
+.list-item.completed {
+	background-color: rgb(247, 159, 159);
+	color: #fff;
+}
+
+.list-item.completed p {
+	text-decoration: line-through;
 }

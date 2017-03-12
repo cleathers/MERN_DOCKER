@@ -1,18 +1,26 @@
 import React from 'react';
-import { Button, ListGroupItem, Glyphicon } from 'react-bootstrap'
+import { Row, Col, Button, ButtonToolbar, ButtonGroup, ListGroupItem, Glyphicon } from 'react-bootstrap'
 
 export default class ListItem extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.markComplete = this.markComplete.bind(this);
+		this.toggleButtonIcon = this.toggleButtonIcon.bind(this);
+		this.toggleStatus = this.toggleStatus.bind(this);
 		this.removeTodo = this.removeTodo.bind(this);
 	}
 
-	markComplete(event) {
+	toggleButtonIcon() {
+		let unmark = 'ok';
+		let completed = 'minus';
+
+		return this.props.completed ? completed : unmark;
+	}
+
+	toggleStatus(event) {
 		event.preventDefault();
 
-		this.props.updateFunc(this.props.id);
+		this.props.updateFunc(this.props.id, !this.props.completed);
 	}
 
 	removeTodo(event) {
@@ -22,14 +30,24 @@ export default class ListItem extends React.Component {
 	}
 
 	render() {
-		return <ListGroupItem data-id={this.props.id} className={'clearfix' + (this.props.completed ? ' completed' : '')}>
-			{this.props.title}
-			<Button bsStyle="danger" className="pull-right margin-right"  onClick={this.removeTodo}>
-				<Glyphicon glyph="remove" className="margin-right" /><span>Remove Todo</span>
-			</Button>
-			<Button bsStyle="success" className="pull-right" onClick={this.markComplete}>
-				<Glyphicon glyph="ok" className="margin-right" /><span>Mark Complete</span>
-			</Button>
+		return <ListGroupItem data-id={this.props.id} className={`clearfix list-item${this.props.completed ? ' completed' : ''}`} >
+			<Row>
+				<Col xs={6} >
+					<p>{this.props.title}</p>
+				</Col>
+				<Col xs={6}>
+					<ButtonToolbar className="pull-right list-buttons">
+						<ButtonGroup>
+							<Button bsStyle="success" onClick={this.toggleStatus}>
+								<Glyphicon glyph={this.toggleButtonIcon()} />
+							</Button>
+							<Button bsStyle="danger" onClick={this.removeTodo}>
+								<Glyphicon glyph="remove" />
+							</Button>
+						</ButtonGroup>
+					</ButtonToolbar>
+				</Col>
+			</Row>
 		</ListGroupItem>;
 	}
 }
