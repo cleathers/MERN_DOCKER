@@ -30,6 +30,7 @@
 	- This is mostly the same command as ealier, but now we're using the `--link mongod:mongod` option to connect our containers together. The Express container is able to access the Mongo container at the host name defined in the link option. For this particular application I'm passing the hostname into the application using an environment variable with the `-e` option.
 
 ### React and Webpack
+##### Webpack
 1. In order to use React's fancy JSX syntax, you'll need to use some sort of compiler so that the browser can read what we wrote. We'll use webpack for that. The image we built earlier already has this dependency, but there are a couple of other dependencies we'll need to install in order to compile jsx files specifically.
 	- `$ docker run -it -v $(pwd):/var/www node-express-webpack npm install --save babel-core babel-loader babel-preset-latest babel-preset-react react react-dom`
 	- The Babel dependencies get us the compiler code, the react packages get us code that we'll use for the Frontend.
@@ -43,3 +44,19 @@
 1. Run the Webpack bundler like so:
 	- `$ docker run -it -v $(pwd):/var/www express-node-webpack webpack`
 	- Provided you didn't run into any errors, you should now see a bundled file in the location of the output property in the `webpack.config.js`.
+##### React
+1. The entrypoint to this react app can be found at `./src/js/app.jsx`.
+	- The line that invokes `ReactDOM.render` is responsible for attaching your React code to the page. The first argument is a reference to the Component you'd like to load to the page. The second argument is a reference to the DOM node you'd like to attach the React app to.
+1. Application Structure:
+	- For simple applications, I'd suggest placing Components which handle data and state within the `src/js/containers` directory. Components which just accept properties and don't maintain state should go in the `./src/js/components`. If you need to communicate a change from a child component back up to the parent, you can pass the child a function belonging to the parent as a prop.
+	- For more complex applications I'd suggest using [Redux](http://redux.js.org/) or [Vue.js](https://vuejs.org/).
+1. Props && State
+	- Props are passed into a component from a parent component.
+	- State is maintained within an instance of a component.
+	- State can be changed using the `setState` function.
+	- You can access a components state or props using `this.state` or `this.props`.
+1. The Component Lifecycle
+	- There are a few different lifecycle methods you can hook into. The most commonly used one is `render` as it's required to create a component.
+	- A components `render` function is ran whenever that component has either recieved new props or has changed it's state.
+	- Sometimes you'll want to modify state before or after a components `render` method has been called. React offers a few different methods that allow you to hook into different parts of the components lifecycle. [More information on that can be found here](https://facebook.github.io/react/docs/react-component.html).
+

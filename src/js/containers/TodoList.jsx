@@ -17,7 +17,9 @@ export default class TodoList extends React.Component {
 			todos: [],
 			newTodoValue: ''
 		};
+	}
 
+	componentDidMount() {
 		// Go get our todos
 		this.fetchTodos();
 	}
