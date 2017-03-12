@@ -34,12 +34,12 @@
 	- `$ docker run -it -v $(pwd):/var/www node-express-webpack npm install --save babel-core babel-loader babel-preset-latest babel-preset-react react react-dom`
 	- The Babel dependencies get us the compiler code, the react packages get us code that we'll use for the Frontend.
 1. We'll need to create a `webpack.config.js` file in order for webpack to know what to do with our code. This file just exports a webpack configuration object. The key properties to note are:
-		- `entry`: Webpack will automatically bundle all dependencies required to run the file(s) in this properties.
-		- `output`: This is where Webpack will place the bundled file. [Reference for multiple output files](http://codyreichert.github.io/blog/2015/07/04/webpack-create-multiple-bundles-with-entry-points/)
-		- `module.loaders`:
-			- `test`: a regexp for what filetypes to include
-			- `loader`: which loader strategy to use
-			- `query.presets`: An array of Babel presets to use
+	- `entry`: Webpack will automatically bundle all dependencies required to run the file(s) in this properties.
+	- `output`: This is where Webpack will place the bundled file. [Reference for multiple output files](http://codyreichert.github.io/blog/2015/07/04/webpack-create-multiple-bundles-with-entry-points/)
+	- `module.loaders`:
+		- `test`: a regexp for what filetypes to include
+		- `loader`: which loader strategy to use
+		- `query.presets`: An array of Babel presets to use
 1. Run the Webpack bundler like so:
 	- `$ docker run -it -v $(pwd):/var/www express-node-webpack webpack`
 	- Provided you didn't run into any errors, you should now see a bundled file in the location of the output property in the `webpack.config.js`.
