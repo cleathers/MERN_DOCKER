@@ -42,7 +42,7 @@
 		- `loader`: which loader strategy to use
 		- `query.presets`: An array of Babel presets to use
 1. Run the Webpack bundler like so:
-	- `$ docker run -it -v $(pwd):/var/www express-node-webpack webpack`
+	- `$ docker run -it -v $(pwd):/var/www node-express-webpack webpack`
 	- Provided you didn't run into any errors, you should now see a bundled file in the location of the output property in the `webpack.config.js`.
 
 #### React
