@@ -26,7 +26,7 @@
 
 ### Connect Express to Mongo
 1. Now that your Mongo container is running in the background we can link it to our Express container using the `--link` option.
-	- `$ docker run -it --link mongod:mongod -p 3000:3000 -v $(pwd):/var/www -e MONGOD_HOST=mongod node-express-webpack ./bin/www`
+	- `$ docker run -it --link mongod:mongod -p 3000:3000 -v $(pwd):/var/www -e MONGOD_URL=mongod node-express-webpack ./bin/www`
 	- This is mostly the same command as ealier, but now we're using the `--link mongod:mongod` option to connect our containers together. The Express container is able to access the Mongo container at the host name defined in the link option. For this particular application I'm passing the hostname into the application using an environment variable with the `-e` option.
 
 ### React and Webpack
