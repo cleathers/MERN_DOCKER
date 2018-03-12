@@ -50,7 +50,7 @@
 	- The line that invokes `ReactDOM.render` is responsible for attaching your React code to the page. The first argument is a reference to the Component you'd like to load to the page. The second argument is a reference to the DOM node you'd like to attach the React app to.
 1. Application Structure:
 	- For simple applications, I'd suggest placing Components which handle data and state within the `src/js/containers` directory. Components which just accept properties and don't maintain state should go in the `./src/js/components`. If you need to communicate a change from a child component back up to the parent, you can pass the child a function belonging to the parent as a prop.
-	- For more complex applications I'd suggest using [Redux](http://redux.js.org/) or [Vue.js](https://vuejs.org/).
+	- For more complex applications I'd suggest using [Redux](http://redux.js.org/).
 1. Props && State
 	- Props are passed into a component from a parent component.
 	- State is maintained within an instance of a component.
